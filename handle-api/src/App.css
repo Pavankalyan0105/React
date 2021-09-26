@@ -1,0 +1,23 @@
+
+.App{
+    margin-top:6rem;
+    background:rgba(15, 13, 146, 0.911);
+}
+
+.blue{
+    background-color: #252072;
+    color: rgb(255, 255, 255);
+    padding:0.3rem;
+    border-radius:0.3rem;
+}
+
+.green{
+    background-color: #da247f;
+    color: rgb(255, 255, 255);
+    padding:0.3rem;
+    border-radius:0.3rem;
+}
+
+#Card{
+    margin: 8rem;
+}
