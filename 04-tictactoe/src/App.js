@@ -11,8 +11,6 @@ import './App.css';
 
 var itemArray = new Array(9).fill("empty")
 
-var currentStep = 0;
-var steps = [new Array(9).fill("empty") ];
 
 function App() {
 
@@ -31,13 +29,17 @@ function App() {
 
   const checkIsWinner = () => {
 
+    // 0 1 2
+    // 3 4 5
+    // 6 7 8
+
     if( itemArray[0]!=="empty" && itemArray[0]===itemArray[1] && itemArray[1]===itemArray[2])
                 setWinMessage( isCross?"circle won":"cross win");
 
     else if( itemArray[3]!=="empty" && itemArray[3]===itemArray[4] && itemArray[4]===itemArray[5])
                 setWinMessage( isCross?"circle won":"cross win");
 
-    else if( itemArray[6]!=="empty" && itemArray[6]===itemArray[7] && itemArray[1]===itemArray[8])
+    else if( itemArray[6]!=="empty" && itemArray[6]===itemArray[7] && itemArray[7]===itemArray[8])
                 setWinMessage( isCross?"circle won":"cross win");
 
 
@@ -58,6 +60,16 @@ function App() {
     else if( itemArray[2]!=="empty" && itemArray[2]===itemArray[4] && itemArray[4]===itemArray[6])
                 setWinMessage( isCross?"circle won":"cross win");
 
+    if(winMessage.length!==0) return "e";
+    let fillCount=0;
+
+    itemArray.map( (val) => {
+      if(val!=="empty") fillCount++;
+    })
+
+    console.log(fillCount);
+
+
   };
 
   const changeItem = (index) => {
@@ -72,11 +84,7 @@ function App() {
         return toast( "Already filled !!" , {type:"error"})
       }
 
-      const temp = itemArray.slice();
-      steps.push(temp);
-      currentStep+=1;
-
-      checkIsWinner();
+      checkIsWinner();  
   };
 
 
@@ -106,7 +114,7 @@ function App() {
 
               <div className="grid">
                 {itemArray.map( (item , index) => (
-                  <Card color = "warning" onClick = { () => changeItem(index)}>
+                  <Card color = "warning" className="button" onClick = { () => changeItem(index)}>
                     <CardBody className="box">
                       <Icon name={item}/>
                     </CardBody>
@@ -114,16 +122,7 @@ function App() {
                 ))}
               </div>
 
-              <button onClick = { () => {
-                if(currentStep === 0) 
-                  return toast("You have reached the first step" , {type:"error"});
-                setIsCross(!isCross);
-                currentStep-=1;
-                itemArray = steps[currentStep].slice();
-                steps.pop();
-                console.log(steps);
-              }
-            }> Prev Step </button>
+              
           </Col>
         </Row>
 

@@ -1,5 +1,5 @@
 {
-  "name": "side-one-context",
+  "name": "tictactoe",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
