@@ -1,4 +1,5 @@
 import React , {useState} from 'react';
+import './App.css';
 
 function App(){
 
@@ -21,12 +22,14 @@ function App(){
     const addTodo = () => {
         if(inputValue){
             var newList = [...todoList];
-            newList.push({value :inputValue , isDone:false });
+            newList.push({value :inputValue , isDone:false , id:Date.now()});
             setTodoList(newList);            
         }
         else{
             console.log("please enter some value");
         }
+
+        setInputValue("")
     }
 
     const remove = () => {
@@ -37,41 +40,51 @@ function App(){
         console.log(inputValue);
     }
 
+    const markComplete = (citem) => {
+        const updated = todoList.map( (item, idx) => {
+            if(item === citem) {
+                item.isDone = !item.isDone;
+            }
+            return item;
+        })
+
+        setTodoList(updated);
+        console.log(updated);
+    }
+
 
 
     return (
-        <div>
+        <div className="App">
+            <div className="container">
             <h1>TODO APP</h1>
-            <div>
-                <input type="text" onChange = {
+            <div className="form">
+                <input type="text" value = {inputValue} onChange = {
                     (e) => {
                         setInputValue(e.target.value);
                     }
                 }/>
                 <button onClick = {addTodo}>
-                    add todo
+                ➕
                 </button>
             </div>
-            <div>
+            <div className="ul">
 
             {
                 todoList.map( (item , idx) => {
-                    return <li key={idx}> <span> {item.value} <input type="checkbox"  placeholder="enter your todo" value = {inputValue} onChange = {
-                        (e) => {
-                            console.log(item.isDone);
-                            if(e.target.checked){
-                                item.isDone = true;
-                            }
-                            else{
-                                item.isDone = false;
-                            }
-                        }
-                    } /></span></li>
+                    return  <li
+                        style={{
+                            "text-decoration":(item.isDone)?"line-through":"none"
+                        }}
+                    
+                    >{item.value} <span><button disabled={item.isDone} onClick={ () => markComplete(item) }> Completed</button></span></li>
                 })
             } 
             </div>
            
-            <button onClick = { remove }>Remove Done todo</button>
+            <button onClick = { remove }>Remove Completed todo</button>
+            </div>
+            
         </div>
     )
 }
